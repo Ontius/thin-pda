@@ -1,5 +1,7 @@
 package ch.zhaw.thin.pda;
 
+import java.util.Scanner;
+
 /**
  * The Main class of the application.
  *
@@ -15,8 +17,17 @@ public class Main {
      */
     public static void main(String[] args) {
         PDABasic pdaBasic = new PDABasic();
-        boolean isAccepted = pdaBasic.process("DDODDOO");
-        System.out.println(isAccepted);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter a string to parse: ");
+        while(scanner.hasNext()) {
+            String input =  scanner.nextLine();
+            if (pdaBasic.process(input)) {
+                System.out.println(input + " is a valid UPN notation");
+            } else {
+                System.err.println(input + " is not a valid UPN notation");
+            }
+        }
+        System.exit(-1);
     }
 
 }
