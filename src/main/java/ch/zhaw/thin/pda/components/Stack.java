@@ -1,4 +1,4 @@
-package ch.zhaw.thin.pda;
+package ch.zhaw.thin.pda.components;
 
 import java.util.Arrays;
 
@@ -38,7 +38,7 @@ public class Stack {
         stack = newStack;
 
         for(int i = 0; i < symbols.length; i++) {
-            stack[stack.length - i + 1] = symbols[i];
+            stack[stack.length - i - 1] = symbols[i];
         }
     }
 
@@ -48,6 +48,10 @@ public class Stack {
      * @return The symbol that was removed from the stack.
      */
     public char pop() {
+        if(stack.length == 0) {
+            return INITIAL_STACK_SYMBOL;
+        }
+
         char symbol = stack[stack.length - 1];
         stack = Arrays.copyOf(stack, stack.length - 1);
         return symbol;

@@ -14,6 +14,9 @@ public class Main {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
+        PDABasic pdaBasic = new PDABasic();
+        boolean isAccepted = pdaBasic.process("DDODDOO");
+        System.out.println(isAccepted);
     }
 
 }
