@@ -2,16 +2,15 @@ package ch.zhaw.thin.pda;
 
 import ch.zhaw.thin.pda.components.MetaVariable;
 import ch.zhaw.thin.pda.components.PDA;
-import ch.zhaw.thin.pda.components.Stack;
-import ch.zhaw.thin.pda.components.TransitionRule;
 
 /**
- * The PDABasic class represents a PDA that accepts D's, O's. An example input would be 'DDODDOO'.
+ * The PDANumber class represents a PDA that accepts numbers and arithmetic operators (+, -, *, /).
+ * An example input would be '99+'.
  *
  * @author Patrick Egli
  * @version 1.0.0
  */
-public class PDANumber {
+public class PDANumber extends PDABasic {
 
     private static final char DIGIT = 'D';
     private static final char OPERATION = 'O';
@@ -22,7 +21,7 @@ public class PDANumber {
      * Creates a {@link PDANumber} object instance.
      */
     public PDANumber() {
-        pda = new PDA(getTransitionRules(), getAcceptedStates(), getMetaVariables());
+        pda = new PDA(getTransitionRules(), getAcceptedStates(), getMetaVariables(true));
     }
 
     /**
@@ -36,40 +35,22 @@ public class PDANumber {
     }
 
     /**
-     * Returns the transition rules.
-     *
-     * @return An array containing all transition rules.
-     */
-    private TransitionRule[] getTransitionRules() {
-        return new TransitionRule[] {
-                new TransitionRule(0, 1, DIGIT, Stack.INITIAL_STACK_SYMBOL, DIGIT), // q0 -> q1
-                new TransitionRule(1, 2, DIGIT, DIGIT, DIGIT, DIGIT), // q1 -> q2
-                new TransitionRule(2, 3, OPERATION, DIGIT), // q2 -> q3
-                new TransitionRule(3, 1, DIGIT, DIGIT, DIGIT, DIGIT), // q3 -> q1
-                new TransitionRule(3, 3, OPERATION, DIGIT), // q3 -> q3
-                new TransitionRule(3, 4, EPSILON, DIGIT), // q3 -> q4
-                new TransitionRule(4, 5, EPSILON, Stack.INITIAL_STACK_SYMBOL), // q4 -> q5
-        };
-    }
-
-    /**
-     * Returns the accepted states.
-     *
-     * @return An array containing the accepted states.
-     */
-    private int[] getAcceptedStates() {
-        return new int[] { 5 };
-    }
-
-    /**
      * Returns the meta variables.
      *
+     * @param includeMetaAlias Indicates whether the meta variable is included as a symbol.
      * @return An array containing the meta variables.
      */
-    private MetaVariable[] getMetaVariables() {
-        return new MetaVariable[] {
-                new MetaVariable('D', new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }),
-                new MetaVariable('O', new char[] { '+', '-', '*', '/' })
-        };
+    private MetaVariable[] getMetaVariables(boolean includeMetaAlias) {
+        if(includeMetaAlias) {
+            return new MetaVariable[]{
+                    new MetaVariable('D', new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'D'}),
+                    new MetaVariable('O', new char[]{'+', '-', '*', '/', 'O'})
+            };
+        } else {
+            return new MetaVariable[]{
+                    new MetaVariable('D', new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}),
+                    new MetaVariable('O', new char[]{'+', '-', '*', '/'})
+            };
+        }
     }
 }

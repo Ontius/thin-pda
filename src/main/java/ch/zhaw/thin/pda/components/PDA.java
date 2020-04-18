@@ -84,7 +84,7 @@ public class PDA {
         for(TransitionRule rule : transitionRules) {
             symbol = (metaVariable == null) ? symbol : metaVariable.getAlias();
 
-            if(rule.isRuleFulfilled(state, symbol, popSymbol)) {
+            if((metaVariable != null || !isMetaVariableAlias(symbol)) && rule.isRuleFulfilled(state, symbol, popSymbol)) {
                 if(rule.getPushSymbols() != null && rule.getPushSymbols().length > 0) {
                     stack.push(rule.getPushSymbols());
                 }
@@ -105,6 +105,22 @@ public class PDA {
     private boolean isStateAccepted(int state) {
         for (int acceptedState : acceptedStates) {
             if (acceptedState == state) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether the given {@code symbol} is a meta variable alias or not.
+     *
+     * @param symbol The symbol that is being checked.
+     * @return A boolean state indicating whether the given {@code symbol} is a meta variable alias or not.
+     */
+    private boolean isMetaVariableAlias(char symbol) {
+        for(MetaVariable metaVariable : metaVariables) {
+            if(metaVariable.getAlias() == symbol) {
                 return true;
             }
         }

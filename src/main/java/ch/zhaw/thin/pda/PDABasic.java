@@ -39,7 +39,7 @@ public class PDABasic {
      *
      * @return An array containing all transition rules.
      */
-    private TransitionRule[] getTransitionRules() {
+    protected TransitionRule[] getTransitionRules() {
         return new TransitionRule[] {
                 new TransitionRule(0, 1, DIGIT, Stack.INITIAL_STACK_SYMBOL, DIGIT), // q0 -> q1
                 new TransitionRule(1, 2, DIGIT, DIGIT, DIGIT, DIGIT), // q1 -> q2
@@ -56,7 +56,7 @@ public class PDABasic {
      *
      * @return An array containing the accepted states.
      */
-    private int[] getAcceptedStates() {
+    protected int[] getAcceptedStates() {
         return new int[] { 5 };
     }
 }
