@@ -17,16 +17,21 @@ public class Main {
      */
     public static void main(String[] args) {
         PDABasic pdaBasic = new PDABasic();
+        PDANumber pdaNumber = new PDANumber();
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter a string to parse: ");
+
         while(scanner.hasNext()) {
             String input =  scanner.nextLine();
-            if (pdaBasic.process(input)) {
+
+            if (pdaNumber.process(input)) {
                 System.out.println(input + " is a valid UPN notation");
             } else {
                 System.err.println(input + " is not a valid UPN notation");
             }
         }
+
         System.exit(-1);
     }
 
